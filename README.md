@@ -4,8 +4,6 @@ This project represents a topology for a University with fail-safe network that 
 
 In this topology I configured HQ and branch. Between HQ and Branch I configured IPSec for secure connection. Routing is implemented using OSPF and static routing with the ISP. Details on security, routing, and infrastructure are provided below.
 
-## Topology
-![Entire Topology](# University Network Topology
 ## About
 This project represents a topology for a University with fail-safe network that includes HSRP on L3 switches, 2 DHCPs servers, Cisco ASA, IPSec, ACLs, SSH, WLC, VoIP, Server Farm.
 
@@ -117,7 +115,6 @@ FTP         | Data storage
 **L3 Switch:** Configured with HSRP, OSPF, Inter Vlan Routing and between them EtherChannel with LACP.   
 **Cisco ASA:** Configured with IPSec, OSPF, ACLs and NAT with dynamic interface.  
 *`P.s. In .pkt file Cisco ASAs with ACL that allows all traffic because ASA doesn't want to pass my Web server even with permit ports 80 and 443.`*
-)
 
 ## Security
 Topology has Cisco ASA firewall in HQ and branch thats confugured with:
@@ -236,3 +233,4 @@ FTP         | Data storage
 * 4 x Layer 3 Switch
 * 3 x Layer 2 Switches
 * PCs
+
