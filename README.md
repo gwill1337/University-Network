@@ -63,7 +63,7 @@ Name         |     IP
 :---------:  | :----------:
 SRV | 10.10.10.0/24
 
-[P.s ](#else) Here better use mask /28 for SRV so as not to use the entire network but in my case CPT doesn't want work with this mask.
+P.S. Here better use mask /28 for SRV so as not to use the entire network but in my case CPT doesn't want work with this mask.
 
 ## HQ
 ### Topology
@@ -167,7 +167,7 @@ Name         |     IP
 :---------:  | :----------:
 SRV | 10.10.10.0/24
 
-[P.s ](#else) Here better use mask /28 for SRV so as not to use the entire network but in my case CPT doesn't want work with this mask.
+P.S. Here better use mask /28 for SRV so as not to use the entire network but in my case CPT doesn't want work with this mask.
 
 ## HQ
 ### Topology
