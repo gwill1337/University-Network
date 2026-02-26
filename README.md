@@ -7,7 +7,7 @@ In this topology I configured HQ and branch. Between HQ and Branch I configured 
 ## About
 This project represents a topology for a University with fail-safe network that includes HSRP on L3 switches, 2 DHCPs servers, Cisco ASA, IPSec, ACLs, SSH, WLC, VoIP, Server Farm.
 
-In this topology I configured HQ and branch. Between HQ and Branch I configured IPSec for secure connection. Routing is implemented using OSPF and static routing with the ISP. Details on security, routing, and infrastructure are provided below. Furthermore I configured BGP and other branch after BGP with 3 Layer topology.
+In this topology I configured HQ and branch. Between HQ and Branch I configured IPSec for secure connection. Routing is implemented using OSPF and static routing with the ISP. Details on security, routing, and infrastructure are provided below. Furthermore I configured BGP and other branch after BGP with 3 Layer topology and EIGRP.
 
 ## Topology
 ![Entire Topology](https://github.com/gwill1337/University-Network/blob/main/Images/Updated_Network.png)
