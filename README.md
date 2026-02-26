@@ -94,7 +94,7 @@ Server      |     Function
 ---------   |    :----------:
 DHCP 1        | For DHCP IPs for HQ and Branch
 DHCP 2       | DHCP if DHCP 1 falls
-NTP/SYSLOG         | Time synchronization for HQ and branch Network diveces, and this same one for logging
+NTP/SYSLOG         | Time synchronization for HQ and branch Network devices, and this same one for logging
 DNS         | Resolves company domain + forwards to Google DNS (8.8.8.8)
 WEB         | University website
 FTP         | Data storage
