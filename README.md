@@ -1,11 +1,11 @@
 # University Network Topology
 ## About
-This project represents a topology for a University with fail-safe network that includes HSRP on L3 switches, 2 DHCPs servers, Cisco ASA, IPSec, ACLs, SSH, WLC, VoIP, Server Farm.
+This project represents a topology for a University with fail-safe network that includes HSRP on L3 switches, 2 DHCP servers, Cisco ASA, IPSec, ACLs, SSH, WLC, VoIP, Server Farm.
 
 In this topology I configured HQ and branch. Between HQ and Branch I configured IPSec for secure connection. Routing is implemented using OSPF and static routing with the ISP. Details on security, routing, and infrastructure are provided below.
 
 ## About
-This project represents a topology for a University with fail-safe network that includes HSRP on L3 switches, 2 DHCPs servers, Cisco ASA, IPSec, ACLs, SSH, WLC, VoIP, Server Farm.
+This project represents a topology for a University with fail-safe network that includes HSRP on L3 switches, 2 DHCP servers, Cisco ASA, IPSec, ACLs, SSH, WLC, VoIP, Server Farm.
 
 In this topology I configured HQ and branch. Between HQ and Branch I configured IPSec for secure connection. Routing is implemented using OSPF and static routing with the ISP. Details on security, routing, and infrastructure are provided below. Furthermore I configured BGP and other branch after BGP with 3 Layer topology and EIGRP.
 
@@ -24,7 +24,7 @@ Every switch and router is configured with:
 * **Switchport Nonegotiate**
 * **STP Portfast on all access ports**
 * **BPDU Guard on all access ports**
-* **Blackhole Vlan and shutdown on all unusable ports**
+* **Blackhole Vlan and shutdown on all unused ports**
 * **SSH with ACL**
 
 ### Details:
@@ -93,7 +93,7 @@ P.S. Here better use mask /28 for SRV so as not to use the entire network but in
 Server      |     Function
 ---------   |    :----------:
 DHCP 1        | For DHCP IPs for HQ and Branch
-DHCP 2       | DHCP if DHCP 1 falls
+DHCP 2       | DHCP if DHCP 1 fails
 NTP/SYSLOG         | Time synchronization for HQ and branch Network devices, and this same one for logging
 DNS         | Resolves company domain + forwards to Google DNS (8.8.8.8)
 WEB         | University website
