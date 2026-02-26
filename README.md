@@ -20,7 +20,7 @@ Topology has Cisco ASA firewall in HQ and branch thats confugured with:
 * **IPSec connectinon between HQ and Branch**   
 * **NAT**
 
-Every switches and routers configured with:
+Every switch and router is configured with:
 * **Switchport Nonegotiate**
 * **STP Portfast on all access ports**
 * **BPDU Guard on all access ports**
@@ -63,7 +63,7 @@ Name         |     IP
 :---------:  | :----------:
 SRV | 10.10.10.0/24
 
-P.S. Here better use mask /28 for SRV so as not to use the entire network but in my case CPT doesn't want work with this mask.
+P.S. Here better use mask /28 for SRV so as not to use the entire network but in my case CPT doesn't want to work with this mask.
 
 ## HQ
 ### Topology
