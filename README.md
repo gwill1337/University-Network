@@ -77,7 +77,7 @@ P.S. Here better use mask /28 for SRV so as not to use the entire network but in
 * 1 x WLC 2504
 * 6 x LAP
 * 7 x Servers
-* 1 x Ip Phone
+* 1 x IP Phone
 * 1 x Printer
 * PCs
 
