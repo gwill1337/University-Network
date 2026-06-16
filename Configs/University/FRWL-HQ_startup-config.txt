@@ -1,0 +1,192 @@
+: Saved
+: Written by enable_15 at 01:04:57 UTC Oct 19 2025
+: Call-home enabled from prompt by enable_15 at 01:04:57 UTC Oct 19 2025
+:
+ASA Version 9.6(1)
+!
+hostname FRWL-HQ
+domain-name wr
+enable password TQaTZQ6borpImUez encrypted
+names
+!
+interface GigabitEthernet1/1
+ nameif OUTSIDE
+ security-level 0
+ ip address 100.1.1.2 255.255.255.252
+!
+interface GigabitEthernet1/2
+ nameif DMZ
+ security-level 70
+ ip address 10.10.10.1 255.255.255.0
+!
+interface GigabitEthernet1/3
+ nameif INSIDE1
+ security-level 100
+ ip address 10.1.1.1 255.255.255.252
+!
+interface GigabitEthernet1/4
+ nameif INSIDE2
+ security-level 100
+ ip address 10.1.1.5 255.255.255.252
+!
+interface GigabitEthernet1/5
+ no nameif
+ no security-level
+ no ip address
+ shutdown
+!
+interface GigabitEthernet1/6
+ no nameif
+ no security-level
+ no ip address
+ shutdown
+!
+interface GigabitEthernet1/7
+ no nameif
+ no security-level
+ no ip address
+ shutdown
+!
+interface GigabitEthernet1/8
+ no nameif
+ no security-level
+ no ip address
+ shutdown
+!
+interface Management1/1
+ management-only
+ no nameif
+ no security-level
+ no ip address
+ shutdown
+!
+object network DMZ
+ subnet 10.10.10.0 255.255.255.0
+object network INSIDE1-OUTSIDE
+ subnet 192.168.20.0 255.255.255.0
+ nat (INSIDE1,OUTSIDE) dynamic interface
+object network INSIDE1a-OUTSIDE
+ subnet 192.168.20.0 255.255.255.0
+ nat (INSIDE2,OUTSIDE) dynamic interface
+object network INSIDE2-OUTSIDE
+ subnet 192.168.10.0 255.255.255.0
+ nat (INSIDE1,OUTSIDE) dynamic interface
+object network INSIDE2a-OUTSIDE
+ subnet 192.168.10.0 255.255.255.0
+ nat (INSIDE2,OUTSIDE) dynamic interface
+object network INSIDE3-OUTSIDE
+ subnet 172.11.0.0 255.255.0.0
+ nat (INSIDE1,OUTSIDE) dynamic interface
+object network INSIDE3a-OUTSIDE
+ subnet 172.11.0.0 255.255.0.0
+ nat (INSIDE2,OUTSIDE) dynamic interface
+object network INSIDE4-OUTSIDE
+ subnet 1.10.0.0 255.255.0.0
+ nat (INSIDE1,OUTSIDE) dynamic interface
+object network INSIDE4a-OUTSIDE
+ subnet 1.10.0.0 255.255.0.0
+ nat (INSIDE2,OUTSIDE) dynamic interface
+!
+route OUTSIDE 0.0.0.0 0.0.0.0 100.1.1.1 1
+route INSIDE1 192.168.10.0 255.255.255.0 10.1.1.2 1
+route INSIDE1 192.168.20.0 255.255.255.0 10.1.1.2 1
+route INSIDE1 172.11.0.0 255.255.0.0 10.1.1.2 1
+route INSIDE1 1.10.0.0 255.255.0.0 10.1.1.2 1
+!
+access-list SRV-ACCESS extended permit icmp any any
+access-list SRV-ACCESS extended permit udp any any eq bootps
+access-list SRV-ACCESS extended permit udp any any eq bootpc
+access-list SRV-ACCESS extended permit udp any any eq domain
+access-list SRV-ACCESS extended permit tcp any any eq domain
+access-list SRV-ACCESS extended permit tcp any any eq www
+access-list SRV-ACCESS extended permit tcp any any eq smtp
+access-list SRV-ACCESS extended permit tcp any any eq 20
+access-list SRV-ACCESS extended permit tcp any any eq ftp
+access-list SRV-ACCESS extended permit udp any any eq 5246
+access-list SRV-ACCESS extended permit udp any any eq 5247
+access-list SRV-ACCESS extended permit udp any any eq 12222
+access-list SRV-ACCESS extended permit udp any any eq 12223
+access-list SRV-ACCESS extended permit tcp any any eq 443
+access-list SRV-ACCESS extended permit udp any any eq 2000
+access-list SRV-ACCESS extended permit tcp any any eq 2000
+access-list SRV-ACCESS extended permit tcp any any
+access-list SRV-ACCESS extended permit udp any any
+access-list SRV-ACCESS extended permit tcp 192.168.10.0 255.255.255.0 any eq 22
+access-list VPN-ACL extended permit ip 172.10.0.0 255.255.0.0 172.20.0.0 255.255.0.0
+access-list VPN-ACL extended permit ip 10.10.10.0 255.255.255.0 1.11.0.0 255.255.0.0
+access-list VPN-ACL extended permit ip 172.10.0.0 255.255.0.0 1.11.0.0 255.255.0.0
+access-list VPN-ACL extended permit ip 1.10.0.0 255.255.0.0 172.20.0.0 255.255.0.0
+access-list VPN-ACL extended permit ip 10.10.10.0 255.255.255.0 172.20.0.0 255.255.0.0
+access-list VPN-ACL extended permit ip 1.10.0.0 255.255.0.0 1.11.0.0 255.255.0.0
+access-list VPN-ACL extended permit ip 10.10.10.0 255.255.255.0 192.168.20.0 255.255.255.0
+access-list VPN-ACL extended permit ip 192.168.20.0 255.255.255.0 192.168.21.0 255.255.255.0
+access-list VPN-ACL extended permit ip 10.10.10.0 255.255.255.0 192.168.21.0 255.255.255.0
+access-list VPN-ACL extended permit ip 192.168.10.0 255.255.255.0 192.168.21.0 255.255.255.0
+access-list VPN-ACL extended permit ip 192.168.10.0 255.255.255.0 172.20.0.0 255.255.0.0
+access-list BYPASS extended permit ip any any
+!
+!
+access-group SRV-ACCESS in interface DMZ
+access-group SRV-ACCESS in interface OUTSIDE
+!
+ntp authentication-key 10 md5 08711419584851464B5E5450727E757C65667546224426540609
+ntp authenticate
+ntp trusted-key 10
+ntp server 10.10.10.7
+!
+class-map inspection_default
+ match default-inspection-traffic
+class-map BYPASS-CLASS
+ match access-list  BYPASS
+!
+policy-map type inspect dns preset_dns_map
+ parameters
+  message-length maximum 512
+policy-map global_policy
+ class inspection_default
+  inspect dns preset_dns_map
+  inspect ftp 
+  inspect icmp 
+  inspect tftp 
+ class BYPASS-CLASS
+!
+service-policy global_policy global
+!
+telnet timeout 5
+ssh timeout 5
+!
+!
+crypto ipsec ikev1 transform-set TSET esp-aes esp-sha-hmac
+!
+crypto map CMAP 10 match address VPN-ACL
+crypto map CMAP 10 set peer 100.1.1.6 
+crypto map CMAP 10 set ikev1 transform-set TSET 
+crypto map CMAP interface OUTSIDE
+crypto ikev1 enable OUTSIDE
+crypto ikev1 policy 10
+ encr aes
+ authentication pre-share
+ group 2
+ lifetime 3600
+!
+tunnel-group 100.1.1.6 type ipsec-l2l
+tunnel-group 100.1.1.6 ipsec-attributes
+ ikev1 pre-shared-key SHARED_KEY
+!
+router ospf 1
+ router-id 3.3.3.3
+ log-adjacency-changes
+ network 10.10.10.0 255.255.255.0 area 0
+ network 10.1.1.0 255.255.255.252 area 0
+ network 10.1.1.4 255.255.255.252 area 0
+ network 192.168.10.0 255.255.255.0 area 0
+ network 100.1.1.0 255.255.255.252 area 0
+ network 172.10.0.0 255.255.0.0 area 0
+ network 172.11.0.0 255.255.0.0 area 0
+ network 1.10.0.0 255.255.0.0 area 0
+ network 172.41.1.0 255.255.255.0 area 0
+ network 172.40.1.0 255.255.255.0 area 0
+ network 192.168.20.0 255.255.255.0 area 0
+ default-information originate
+!
+
